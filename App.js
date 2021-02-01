@@ -8,7 +8,7 @@ console.log('Working')
 async function isnpmrepo(username){
 
 var data = await getRepos(username);
-data.map(async names => {
+data.forEach(async names => {
 var exists = await Check(username,names)
 if(exists) await axios.post(`https://api.github.com/repos/${username}/${names}`,{description:exists})
 
@@ -18,7 +18,7 @@ if(exists) await axios.post(`https://api.github.com/repos/${username}/${names}`,
 async function getRepos(username){
 var repo = await axios.get(`https://api.github.com/users/${username}/repos?per_page=2000`),
 names = [];
-repo.data.map(name => names.push(name.name))
+repo.data.forEach(name => names.push(name.name))
 return names
 }
 async function Check(username,names) {
